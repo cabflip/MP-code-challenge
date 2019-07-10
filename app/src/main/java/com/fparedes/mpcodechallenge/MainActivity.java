@@ -1,14 +1,20 @@
 package com.fparedes.mpcodechallenge;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.fparedes.mpcodechallenge.models.PaymentManager;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static java.lang.String.*;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,17 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updatePrice() {
-        if (price == null)
-            return;
-
-        if (price.length() == 0)
-            price = "000";
-
-        if (price.length() == 1)
-            price = "00" + price;
-
-        if (price.length() == 2)
-            price = "0" + price;
+        // Zero-padding with a length of 3
+        price = format(Locale.getDefault(), "%03d", Integer.valueOf(price));
 
         // Get the round price value
         String priceValue = price.substring(0, price.length() - 2);
@@ -75,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Disable button if the price is lower than 100 ($1.00)
         boolean enabled = priceInt > 99;
+
         continueBtn.setEnabled(enabled);
         continueBtn.setClickable(enabled);
 
@@ -125,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.main_continue:
-                Toast.makeText(MainActivity.this, "Continuar", Toast.LENGTH_SHORT).show();
+                PaymentManager.getInstance().setPaymentPrice(price);
+                startActivity(new Intent(MainActivity.this, PaymentMethodsActivity.class));
                 break;
         }
     }
