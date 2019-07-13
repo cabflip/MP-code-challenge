@@ -1,12 +1,14 @@
 package com.fparedes.mpcodechallenge.api;
 
 import com.fparedes.mpcodechallenge.api.response.ApiResponseListener;
-import com.fparedes.mpcodechallenge.models.CardIssuers;
+import com.fparedes.mpcodechallenge.models.CardIssuer;
 import com.fparedes.mpcodechallenge.models.PaymentMethod;
 import com.fparedes.mpcodechallenge.models.PaymentType;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +16,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -87,16 +88,25 @@ public final class ApiClient {
                             paymentMethods.add(paymentMethod);
 
                     }
+                    // Sort alphabetically
+                    Collections.sort(paymentMethods, (paymentMethod1, paymentMethod2) ->
+                            paymentMethod1.getId().compareTo(paymentMethod2.getId()));
+
                     listener.onSuccess(paymentMethods);
                 }, listener::onFailed));
     }
 
     public static void getCardIssuers(CompositeSubscription compSub, String paymentMethodId,
-                                      ApiResponseListener<List<CardIssuers>> listener) {
+                                      ApiResponseListener<List<CardIssuer>> listener) {
 
         compSub.add(apiService.getCardIssuers(Constants.MP_API_KEY, paymentMethodId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(listener::onSuccess, listener::onFailed));
+                .subscribe(cardIssuers -> {
+                    // Sort card issuers alphabetically
+                    Collections.sort(cardIssuers, (cardIssuer1, cardIssuer2) ->
+                            cardIssuer1.getName().compareTo(cardIssuer2.getName()));
+                    listener.onSuccess(cardIssuers);
+                }, listener::onFailed));
     }
 }

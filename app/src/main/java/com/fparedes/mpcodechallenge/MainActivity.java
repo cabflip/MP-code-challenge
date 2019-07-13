@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.main_continue:
-                PaymentManager.getInstance().setPaymentPrice(price);
+                PaymentManager.getInstance().paymentPrice = price;
                 startActivity(new Intent(MainActivity.this, PaymentMethodsActivity.class));
                 break;
         }

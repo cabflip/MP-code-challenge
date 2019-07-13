@@ -1,6 +1,6 @@
 package com.fparedes.mpcodechallenge.api;
 
-import com.fparedes.mpcodechallenge.models.CardIssuers;
+import com.fparedes.mpcodechallenge.models.CardIssuer;
 import com.fparedes.mpcodechallenge.models.PaymentMethod;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public interface MPApiService {
             @Query("public_key") String publicKey);
 
     @GET(GET_CARD_ISSUERS)
-    Observable<List<CardIssuers>> getCardIssuers(
+    Observable<List<CardIssuer>> getCardIssuers(
             @Query("public_key") String publicKey,
             @Query("payment_method_id") String paymentMethodId);
 }
