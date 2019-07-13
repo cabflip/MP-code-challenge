@@ -1,10 +1,7 @@
 package com.fparedes.mpcodechallenge.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.fparedes.mpcodechallenge.R;
-import com.fparedes.mpcodechallenge.models.PaymentMethod;
+import com.fparedes.mpcodechallenge.models.PaymentMethodBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +26,7 @@ import butterknife.ButterKnife;
  */
 public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAdapter.PaymentMethodViewHolder> {
 
-    private List<PaymentMethod> mPaymentMethods = new ArrayList<>();
+    private List<PaymentMethodBase> mPaymentMethods = new ArrayList<>();
     private Context mContext;
     private OnItemSelectedListener mListener;
 
@@ -42,7 +35,7 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
         mListener = listener;
     }
 
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+    public void setPaymentMethods(List<? extends PaymentMethodBase> paymentMethods) {
         mPaymentMethods.clear();
         mPaymentMethods.addAll(paymentMethods);
         notifyDataSetChanged();
@@ -58,10 +51,10 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
 
     @Override
     public void onBindViewHolder(@NonNull PaymentMethodViewHolder viewHolder, int i) {
-        PaymentMethod paymentMethod = mPaymentMethods.get(i);
+        PaymentMethodBase paymentMethod = mPaymentMethods.get(i);
 
         Glide.with(mContext)
-                .load(paymentMethod.getThumbnailUrl())
+                .load(paymentMethod.getThumbnailSecureUrl())
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                 .fitCenter()
                 .into(viewHolder.thumbnailImg);
@@ -75,7 +68,7 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
     }
 
     public interface OnItemSelectedListener {
-        void onItemSelected(PaymentMethod paymentMethod);
+        void onItemSelected(PaymentMethodBase paymentMethodBase);
     }
 
     class PaymentMethodViewHolder extends RecyclerView.ViewHolder {
@@ -90,7 +83,7 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
             ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(view -> {
-                PaymentMethod paymentMethod = mPaymentMethods.get(getAdapterPosition());
+                PaymentMethodBase paymentMethod = mPaymentMethods.get(getAdapterPosition());
                 mListener.onItemSelected(paymentMethod);
             });
         }
