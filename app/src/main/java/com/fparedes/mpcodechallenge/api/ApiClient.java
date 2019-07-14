@@ -1,13 +1,15 @@
 package com.fparedes.mpcodechallenge.api;
 
+import android.support.annotation.NonNull;
+
 import com.fparedes.mpcodechallenge.api.response.ApiResponseListener;
 import com.fparedes.mpcodechallenge.models.CardIssuer;
+import com.fparedes.mpcodechallenge.api.response.InstallmentsResponse;
 import com.fparedes.mpcodechallenge.models.PaymentMethod;
 import com.fparedes.mpcodechallenge.models.PaymentType;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -55,8 +58,8 @@ public final class ApiClient {
         apiService = retrofit.create(MPApiService.class);
     }
 
-    public static void getPaymentMethods(CompositeSubscription compSub, PaymentType paymentTypeFilter,
-                                         ApiResponseListener<List<PaymentMethod>> listener) {
+    public static void getPaymentMethods(CompositeSubscription compSub, @NonNull PaymentType paymentTypeFilter,
+                                         @NonNull ApiResponseListener<List<PaymentMethod>> listener) {
 
         compSub.add(apiService.getPaymentMethods(Constants.MP_API_KEY)
                 .subscribeOn(Schedulers.io())
@@ -97,7 +100,12 @@ public final class ApiClient {
     }
 
     public static void getCardIssuers(CompositeSubscription compSub, String paymentMethodId,
-                                      ApiResponseListener<List<CardIssuer>> listener) {
+                                      @NonNull ApiResponseListener<List<CardIssuer>> listener) {
+
+        if (paymentMethodId == null || paymentMethodId.isEmpty()) {
+            listener.onFailed(new Throwable("PaymentMethod id cannot is null or empty"));
+            return;
+        }
 
         compSub.add(apiService.getCardIssuers(Constants.MP_API_KEY, paymentMethodId)
                 .subscribeOn(Schedulers.io())
@@ -108,5 +116,25 @@ public final class ApiClient {
                             cardIssuer1.getName().compareTo(cardIssuer2.getName()));
                     listener.onSuccess(cardIssuers);
                 }, listener::onFailed));
+    }
+
+    public static void getInstallments(CompositeSubscription compSub, String paymentMethodId,
+                                       double paymentAmount, int issuerId,
+                                       @NonNull ApiResponseListener<InstallmentsResponse> listener) {
+
+        if (paymentMethodId == null || paymentMethodId.isEmpty()) {
+            listener.onFailed(new Throwable("PaymentMethodId is null or empty"));
+            return;
+        }
+
+        compSub.add(apiService.getInstallments(Constants.MP_API_KEY, paymentMethodId, paymentAmount, issuerId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<InstallmentsResponse>>() {
+                    @Override
+                    public void call(List<InstallmentsResponse> installmentsResponse) {
+                        listener.onSuccess(installmentsResponse.get(0));
+                    }
+                }, Throwable::printStackTrace));
     }
 }

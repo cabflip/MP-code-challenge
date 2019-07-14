@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
     }
-    
+
     private void addNumber(String number) {
         price = price.concat(number);
         updatePrice();
@@ -123,9 +123,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.main_continue:
-                PaymentManager.getInstance().paymentPrice = price;
+                PaymentManager.getInstance().paymentAmount = getPaymentAmount();
                 startActivity(new Intent(MainActivity.this, PaymentMethodsActivity.class));
                 break;
         }
+    }
+
+    private double getPaymentAmount() {
+        return Double.parseDouble(
+                priceText.getText().toString() + "." + priceDecimalsText.getText().toString());
     }
 }

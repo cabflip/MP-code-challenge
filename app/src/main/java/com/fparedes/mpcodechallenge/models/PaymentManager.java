@@ -14,7 +14,7 @@ public class PaymentManager {
         return mInstance;
     }
 
-    public String paymentPrice = "000";
+    public double paymentAmount = 0.0;
     public PaymentMethod selectedPaymentMethod = null;
     public List<CardIssuer> cardIssuers = new ArrayList<>();
     public CardIssuer selectedCardIssuer = null;
