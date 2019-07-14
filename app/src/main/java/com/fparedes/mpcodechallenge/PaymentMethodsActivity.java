@@ -3,8 +3,11 @@ package com.fparedes.mpcodechallenge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,6 +31,9 @@ import butterknife.ButterKnife;
 public class PaymentMethodsActivity extends BaseActivity
         implements PaymentMethodsAdapter.OnItemSelectedListener {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @BindView(R.id.payments_recycler_view)
     RecyclerView paymentsList;
     @BindView(R.id.loading_view)
@@ -40,6 +46,11 @@ public class PaymentMethodsActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_methods);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
         adapter = new PaymentMethodsAdapter(this, this);
         paymentsList.setAdapter(adapter);
@@ -97,6 +108,7 @@ public class PaymentMethodsActivity extends BaseActivity
             nextActivity = CardIssuersActivity.class;
 
         startActivity(new Intent(PaymentMethodsActivity.this, nextActivity));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void somethingWentWrong(Throwable throwable) {
@@ -112,5 +124,16 @@ public class PaymentMethodsActivity extends BaseActivity
     protected void onStop() {
         super.onStop();
         loading(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

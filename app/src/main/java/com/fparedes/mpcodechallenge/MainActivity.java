@@ -1,8 +1,9 @@
 package com.fparedes.mpcodechallenge;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,9 +15,12 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.main_currency_label)
     TextView priceCurrencyText;
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
     }
 
     private void addNumber(String number) {
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updatePrice() {
         // Zero-padding with a length of 3
-        price = format(Locale.getDefault(), "%03d", Integer.valueOf(price));
+        price = format(Locale.getDefault(), "%03d", Long.valueOf(price.trim()));
 
         // Get the round price value
         String priceValue = price.substring(0, price.length() - 2);
@@ -68,10 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshContinueBtnStatus() {
-        int priceInt = Integer.valueOf(price);
+        Long priceLong = Long.valueOf(price);
 
         // Disable button if the price is lower than 100 ($1.00)
-        boolean enabled = priceInt > 99;
+        boolean enabled = priceLong > 99;
 
         continueBtn.setEnabled(enabled);
         continueBtn.setClickable(enabled);
@@ -125,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_continue:
                 PaymentManager.getInstance().paymentAmount = getPaymentAmount();
                 startActivity(new Intent(MainActivity.this, PaymentMethodsActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }

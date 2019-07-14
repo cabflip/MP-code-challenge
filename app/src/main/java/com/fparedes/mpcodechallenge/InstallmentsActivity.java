@@ -3,9 +3,12 @@ package com.fparedes.mpcodechallenge;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +30,9 @@ import butterknife.ButterKnife;
 public class InstallmentsActivity extends BaseActivity
         implements InstallmentsAdapter.OnInstallmentSelectedListener {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @BindView(R.id.installments_recycler_view)
     RecyclerView installmentsList;
     @BindView(R.id.loading_view)
@@ -41,6 +47,18 @@ public class InstallmentsActivity extends BaseActivity
         setContentView(R.layout.activity_installments);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        setupRecyclerView();
+
+        paymentManager = PaymentManager.getInstance();
+        getInstallments();
+    }
+
+    private void setupRecyclerView() {
         adapter = new InstallmentsAdapter(this);
         installmentsList.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -49,9 +67,6 @@ public class InstallmentsActivity extends BaseActivity
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(installmentsList.getContext(),
                 linearLayoutManager.getOrientation());
         installmentsList.addItemDecoration(dividerItemDecoration);
-
-        paymentManager = PaymentManager.getInstance();
-        getInstallments();
     }
 
     private void getInstallments() {
@@ -87,5 +102,16 @@ public class InstallmentsActivity extends BaseActivity
 
     private void loading(boolean loading) {
         loadingView.setVisibility(loading ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
