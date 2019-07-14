@@ -39,7 +39,6 @@ public class CardIssuersActivity extends AppCompatActivity
 
         cardIssuersList.setAdapter(adapter);
         cardIssuersList.setLayoutManager(new LinearLayoutManager(this));
-        cardIssuersList.setHasFixedSize(true);
     }
 
     @Override

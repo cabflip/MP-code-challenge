@@ -44,7 +44,6 @@ public class PaymentMethodsActivity extends BaseActivity
         adapter = new PaymentMethodsAdapter(this, this);
         paymentsList.setAdapter(adapter);
         paymentsList.setLayoutManager(new LinearLayoutManager(this));
-        paymentsList.setHasFixedSize(true);
 
         getPaymentMethods();
     }
@@ -55,7 +54,6 @@ public class PaymentMethodsActivity extends BaseActivity
             @Override
             public void onSuccess(@NonNull List<PaymentMethod> paymentMethods) {
                 loading(false);
-
                 adapter.setPaymentMethods(paymentMethods);
             }
 
