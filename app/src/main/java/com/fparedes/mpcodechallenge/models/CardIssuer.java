@@ -14,7 +14,7 @@ public class CardIssuer extends PaymentMethodBase {
     @SerializedName("merchant_account_id")
     private int merchantAccountId;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

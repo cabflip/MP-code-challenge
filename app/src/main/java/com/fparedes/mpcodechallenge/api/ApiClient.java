@@ -119,7 +119,7 @@ public final class ApiClient {
     }
 
     public static void getInstallments(CompositeSubscription compSub, String paymentMethodId,
-                                       double paymentAmount, int issuerId,
+                                       double paymentAmount, Integer issuerId,
                                        @NonNull ApiResponseListener<InstallmentsResponse> listener) {
 
         if (paymentMethodId == null || paymentMethodId.isEmpty()) {

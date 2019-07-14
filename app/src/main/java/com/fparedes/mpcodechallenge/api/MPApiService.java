@@ -33,5 +33,5 @@ public interface MPApiService {
             @Query("public_key") String publicKey,
             @Query("payment_method_id") String paymentMethodId,
             @Query("amount") double paymentAmount,
-            @Query("issuer.id") int issuerId);
+            @Query("issuer.id") Integer issuerId);
 }

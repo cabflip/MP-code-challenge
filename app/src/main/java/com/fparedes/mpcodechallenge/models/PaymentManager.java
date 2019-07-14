@@ -22,4 +22,17 @@ public class PaymentManager {
     private PaymentManager() {
     }
 
+    /**
+     * Some credit cards are they're own Card Issuer (e.g. Cordobesa). In those cases
+     *  there's no need to send that parameter (retrofit interprets null as a signal
+     *  that you don't want to send the parameter).
+     *
+     * @return the selected card issuer ID or null if there's no Card Issuer object
+     */
+    public Integer getSelectedCardIssuerId() {
+        if (selectedCardIssuer != null)
+            return selectedCardIssuer.getId();
+        else
+            return null;
+    }
 }

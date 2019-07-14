@@ -73,7 +73,7 @@ public class InstallmentsActivity extends BaseActivity
         ApiClient.getInstallments(compSub,
                 paymentManager.selectedPaymentMethod.getId(),
                 paymentManager.paymentAmount,
-                paymentManager.selectedCardIssuer.getId(), //TODO create getCardIssuerId
+                paymentManager.getSelectedCardIssuerId(),
                 new ApiResponseListener<InstallmentsResponse>() {
 
                     @Override
