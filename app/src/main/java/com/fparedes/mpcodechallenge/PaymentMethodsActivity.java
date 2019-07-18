@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -51,7 +52,7 @@ public class PaymentMethodsActivity extends BaseActivity
 
         adapter = new PaymentMethodsAdapter(this, this);
         paymentsList.setAdapter(adapter);
-        paymentsList.setLayoutManager(new LinearLayoutManager(this));
+        paymentsList.setLayoutManager(new GridLayoutManager(this, 2));
 
         getPaymentMethods();
     }

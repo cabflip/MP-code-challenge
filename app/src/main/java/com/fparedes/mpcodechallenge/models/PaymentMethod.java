@@ -27,10 +27,10 @@ public class PaymentMethod extends PaymentMethodBase {
 
     public String getPaymentTypeName() {
         if (paymentTypeId.contains("credit"))
-            return "tarjeta de crédito";
+            return "Tarjeta de crédito";
 
         if (paymentTypeId.contains("debit"))
-            return "tarjeta de débito";
+            return "Tarjeta de débito";
 
         return paymentTypeId;
     }

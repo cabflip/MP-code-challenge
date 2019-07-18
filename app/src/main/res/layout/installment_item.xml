@@ -7,4 +7,7 @@
     tools:text="1x $2.222"
     android:padding="12dp"
     style="@style/TextAppearance.AppCompat.Medium"
-    android:background="?attr/selectableItemBackground"/>
+    android:textColor="@android:color/white"
+    android:background="?attr/selectableItemBackground"
+    android:drawableEnd="@drawable/ic_next"
+    android:drawableRight="@drawable/ic_next"/>
