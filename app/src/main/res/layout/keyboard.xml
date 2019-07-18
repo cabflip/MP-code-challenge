@@ -18,7 +18,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_1" />
+            android:text="@string/keyboard_1"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_2"
@@ -27,7 +28,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_2" />
+            android:text="@string/keyboard_2"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_3"
@@ -36,7 +38,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_3" />
+            android:text="@string/keyboard_3"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
@@ -53,7 +56,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_4" />
+            android:text="@string/keyboard_4"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_5"
@@ -62,7 +66,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_5" />
+            android:text="@string/keyboard_5"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_6"
@@ -71,7 +76,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_6" />
+            android:text="@string/keyboard_6"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
@@ -88,7 +94,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_7" />
+            android:text="@string/keyboard_7"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_8"
@@ -97,7 +104,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_8" />
+            android:text="@string/keyboard_8"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_9"
@@ -106,7 +114,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_9" />
+            android:text="@string/keyboard_9"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
@@ -123,7 +132,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_0" />
+            android:text="@string/keyboard_0"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/main_keyb_00"
@@ -132,7 +142,8 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/keyboard_00" />
+            android:text="@string/keyboard_00"
+            android:textColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/main_keyb_backspace"
@@ -142,8 +153,9 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
+            android:onClick="onClick"
             android:src="@drawable/ic_backspace"
-            android:onClick="onClick"/>
+            android:tint="@android:color/white" />
 
     </LinearLayout>
 

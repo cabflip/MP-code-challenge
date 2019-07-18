@@ -4,5 +4,10 @@
     <color name="colorPrimaryDark">#134491</color>
     <color name="colorAccent">#32B3FF</color>
 
-    <color name="transparentGray">#66303030</color>
+    <color name="transparent_gray">#66303030</color>
+
+    <color name="green_positive">#50B33B</color>
+    <color name="red_negative">#F81D2C</color>
+
+    <color name="gray_disabled">#E6E6E6</color>
 </resources>

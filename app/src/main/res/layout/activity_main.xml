@@ -3,16 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
-    <include android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <LinearLayout
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="?attr/actionBarSize"
         android:gravity="center"
         android:padding="20dp">
 
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/currency_symbol"
-            android:textColor="@color/enabled_disabled_selector" />
+            android:textColor="@color/enabled_disabled_selector_text" />
 
         <TextView
             android:id="@+id/main_price"
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/default_price"
-            android:textColor="@color/enabled_disabled_selector"
+            android:textColor="@color/enabled_disabled_selector_text"
             tools:text="150" />
 
         <TextView
@@ -42,7 +44,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/default_price_decimals"
-            android:textColor="@color/enabled_disabled_selector"
+            android:textColor="@color/enabled_disabled_selector_text"
             tools:text="80" />
 
     </LinearLayout>
@@ -58,7 +60,7 @@
         android:backgroundTint="@color/enabled_disabled_selector"
         android:enabled="false"
         android:onClick="onClick"
-        android:padding="10dp"
+        android:padding="20dp"
         android:text="@string/continue_label"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
