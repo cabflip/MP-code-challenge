@@ -1,5 +1,7 @@
 package com.fparedes.mpcodechallenge.models;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -23,7 +25,23 @@ public class PaymentMethod extends PaymentMethodBase {
         return paymentTypeId;
     }
 
+    public String getPaymentTypeName() {
+        if (paymentTypeId.contains("credit"))
+            return "tarjeta de crédito";
+
+        if (paymentTypeId.contains("debit"))
+            return "tarjeta de débito";
+
+        return paymentTypeId;
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getPaymentTypeName() + " " + name;
     }
 }

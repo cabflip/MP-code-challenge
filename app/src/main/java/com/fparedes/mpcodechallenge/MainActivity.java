@@ -2,13 +2,16 @@ package com.fparedes.mpcodechallenge;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fparedes.mpcodechallenge.api.Constants;
 import com.fparedes.mpcodechallenge.models.PaymentManager;
+import com.fparedes.mpcodechallenge.models.PaymentSucceedDialog;
 
 import java.util.Locale;
 
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar.setTitle(getString(R.string.title_main_activity));
         setSupportActionBar(toolbar);
+
+        checkForSuccessfulPayments();
     }
 
     private void addNumber(String number) {
@@ -140,5 +145,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private double getPaymentAmount() {
         return Double.parseDouble(
                 priceText.getText().toString() + "." + priceDecimalsText.getText().toString());
+    }
+
+    private void checkForSuccessfulPayments() {
+        if (getIntent() == null)
+            return;
+
+        boolean paymentSucceeded = getIntent().getBooleanExtra(
+                Constants.PAYMENT_SUCCEEDED, false);
+        if (!paymentSucceeded)
+            return;
+
+        new Handler().postDelayed(() -> new PaymentSucceedDialog().show(this), 500);
     }
 }

@@ -1,9 +1,10 @@
 package com.fparedes.mpcodechallenge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +15,11 @@ import android.widget.Toast;
 
 import com.fparedes.mpcodechallenge.adapters.InstallmentsAdapter;
 import com.fparedes.mpcodechallenge.api.ApiClient;
+import com.fparedes.mpcodechallenge.api.Constants;
 import com.fparedes.mpcodechallenge.api.response.ApiResponseListener;
 import com.fparedes.mpcodechallenge.api.response.InstallmentsResponse;
 import com.fparedes.mpcodechallenge.models.Installment;
 import com.fparedes.mpcodechallenge.models.PaymentManager;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +67,7 @@ public class InstallmentsActivity extends BaseActivity
     }
 
     private void getInstallments() {
+        loading(true);
         ApiClient.getInstallments(compSub,
                 paymentManager.selectedPaymentMethod.getId(),
                 paymentManager.paymentAmount,
@@ -87,11 +88,6 @@ public class InstallmentsActivity extends BaseActivity
                 });
     }
 
-    @Override
-    public void onInstallmentSelected(Installment selectedInstallment) {
-
-    }
-
     private void somethingWentWrong(Throwable throwable) {
         throwable.printStackTrace();
         Toast.makeText(InstallmentsActivity.this, "Algo salio mal!", Toast.LENGTH_SHORT).show();
@@ -99,6 +95,32 @@ public class InstallmentsActivity extends BaseActivity
 
     private void loading(boolean loading) {
         loadingView.setVisibility(loading ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onInstallmentSelected(Installment selectedInstallment) {
+        paymentManager.selectedInstallment = selectedInstallment;
+        String confirmationMessage = String.format(this.getString(
+                R.string.payment_confirmation_message), selectedInstallment.getRecommendedMessage());
+
+        new AlertDialog.Builder(this)
+                .setMessage(confirmationMessage)
+                .setPositiveButton(R.string.positive_button, (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    returnToMainActivity();
+                }).setNegativeButton(R.string.negative_button, (dialogInterface, i) -> dialogInterface.dismiss())
+                .create().show();
+    }
+
+    private void returnToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        intent.putExtra(Constants.PAYMENT_SUCCEEDED, true);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        finish();
     }
 
     @Override

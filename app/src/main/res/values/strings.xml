@@ -23,5 +23,10 @@
     <string name="default_price">0</string>
     <string name="default_price_decimals">00</string>
     <string name="payment_method_item_img_content_description">payment_method_item_img</string>
+    <string name="positive_button">Confirmar</string>
+    <string name="negative_button">Cancelar</string>
+    <string name="payment_confirmation_message">¿Desea confirmar el pago en %s?</string>
+    <string name="payment_succeed_title">El pago fue realizado con exito</string>
+    <string name="close">Cerrar</string>
 
 </resources>
