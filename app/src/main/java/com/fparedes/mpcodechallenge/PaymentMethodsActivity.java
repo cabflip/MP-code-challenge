@@ -47,10 +47,7 @@ public class PaymentMethodsActivity extends BaseActivity
         setContentView(R.layout.activity_payment_methods);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         adapter = new PaymentMethodsAdapter(this, this);
         paymentsList.setAdapter(adapter);
@@ -135,5 +132,13 @@ public class PaymentMethodsActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setToolbar() {
+        toolbar.setTitle(getString(R.string.title_payment_methods_activity));
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

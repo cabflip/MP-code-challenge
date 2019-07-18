@@ -47,10 +47,7 @@ public class InstallmentsActivity extends BaseActivity
         setContentView(R.layout.activity_installments);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         setupRecyclerView();
 
@@ -113,5 +110,13 @@ public class InstallmentsActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setToolbar() {
+        toolbar.setTitle(getString(R.string.title_installments_activity));
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

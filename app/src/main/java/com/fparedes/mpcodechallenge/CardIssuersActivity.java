@@ -38,10 +38,7 @@ public class CardIssuersActivity extends AppCompatActivity
         setContentView(R.layout.activity_card_issuers);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         paymentManager = PaymentManager.getInstance();
 
@@ -68,5 +65,13 @@ public class CardIssuersActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setToolbar() {
+        toolbar.setTitle(getString(R.string.title_card_issuers_activity));
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -1,5 +1,12 @@
 <resources>
+
     <string name="app_name">MP Code Challenge</string>
+
+    <string name="title_main_activity">Ingrese el monto</string>
+    <string name="title_payment_methods_activity">Medios de pago</string>
+    <string name="title_card_issuers_activity">Bancos</string>
+    <string name="title_installments_activity">Cantidad de cuotas</string>
+
     <string name="currency_symbol">$</string>
     <string name="keyboard_1">1</string>
     <string name="keyboard_2">2</string>
